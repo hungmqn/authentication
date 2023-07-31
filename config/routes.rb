@@ -4,7 +4,18 @@ Rails.application.routes.draw do
   # get '/register', to: 'register#index'
   # get '/users', to: 'user#list'
 
-  resources :users
+  resources :users do
+    collection do
+      get 'list'
+    end
+
+    member do
+      get 'show_id'
+    end
+  end
+
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,4 +24,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  
 end

@@ -1,8 +1,26 @@
 class UsersController < ApplicationController
-  def index
+  def index 
+    # admin
     @users = User.all
+
+    respond_to do |format|
+      format.html { render :index, status: :ok }
+      format.json { render json: @users, status: :ok }
+    end
   end
+
+  def list
+    @users = User.all
+
+    render json: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: UserSerializer)
+  end
+
+  def show_id
+    render json: { id: User.find(params[:id]).id }
+  end
+
   def show
+    # show current user
     @user = User.find(params[:id])
   end
   def new
@@ -31,6 +49,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    # admin
     @user = User.find(params[:id])
     @user.destroy
 
